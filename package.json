@@ -1,0 +1,14 @@
+{
+  "name": "sprinkler-node",
+  "version": "1.0.0",
+  "description": "Raspberry Pi based sprinkler controller utilizing node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Donald Organ <dorgan@donaldorgan.com>",
+  "license": "MIT",
+  "dependencies": {
+    "rpi-gpio": "^0.9.1"
+  }
+}
