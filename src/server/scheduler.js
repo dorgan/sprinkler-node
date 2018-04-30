@@ -12,9 +12,9 @@ const RELAY_SPACER = 3000;
 
 var pump = false,
     isRunning = false,
-    sysConfig = require(path.resolve(__dirname, 'config/config.json')),
-    zones = require(path.resolve(__dirname, 'config/zones.json'));
-    schedules = require(path.resolve(__dirname, 'config/schedule.json'));
+    sysConfig = require(path.resolve(__dirname, '../../config/config.json')),
+    zones = require(path.resolve(__dirname, '../../config/zones.json'));
+    schedules = require(path.resolve( __dirname, '../../config/schedule.json'));
 
 setup();
 
@@ -171,8 +171,8 @@ function stopPump() {
 function setup() {
     process.env.TZ = sysConfig.timeZone
 
-    if (fs.existsSync(path.resolve(__dirname, 'config/pump.json'))) {
-        pump = require(path.resolve(__dirname, 'config/pump.json'));
+    if (fs.existsSync(path.resolve(__dirname, '../../config/pump.json'))) {
+        pump = require(path.resolve(__dirname, '../../config/pump.json'));
     }
 
     zones.forEach(zone => {
