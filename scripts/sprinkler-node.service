@@ -1,0 +1,15 @@
+[Unit]
+Description=Sprinkler Node Web Server
+After=network.target
+
+[Service]
+ExecStart=/home/pi/sprinkler-node/src/server/server.js
+Restart=always
+User=pi
+Group=pi
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+WorkingDirectory=/home/pi/sprinkler-node
+
+[Install]
+WantedBy=multi-user.target
