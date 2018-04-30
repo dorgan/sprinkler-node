@@ -15,7 +15,7 @@ git clone git@github.com:dorgan/sprinkler-node.git
 ```
 sudo setcap 'cap_net_bind_service=+ep' `which node`
 ```
-4. Next we want to enable setup and enable the webserver.  To do so execute the following commands:
+4. Next we want to enable setup and enable the webserver and scheduling services.  To do so execute the following commands:
 ```
 sudo systemctl enable /home/pi/sprinkler-node/scripts/sprinkler-node-web.service
 sudo systemctl enable /home/pi/sprinkler-node/scripts/sprinkler-node-scheduler.service
