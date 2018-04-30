@@ -20,5 +20,5 @@ sudo setcap 'cap_net_bind_service=+ep' `which node`
 sudo systemctl enable /home/pi/sprinkler-node/scripts/sprinkler-node-web.service
 sudo systemctl enable /home/pi/sprinkler-node/scripts/sprinkler-node-scheduler.service
 sudo systemctl start sprinkler-node-web
-shdo systemctl start sprinkler-node-scheduler
+sudo systemctl start sprinkler-node-scheduler
 ```
