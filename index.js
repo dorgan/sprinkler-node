@@ -48,7 +48,7 @@ function checkTime() {
                 var parts = time.start.split(':'),
                     min = d.getMinutes(),
                     hr = d.getHours();
-                console.log(hr, min);
+
                 if (min === parseInt(parts[1], 10) && hr === parseInt(parts[0], 10)) {
                     console.log('It is time to run the schedule');
                     shouldRun = true;
@@ -121,7 +121,6 @@ function isOpenValves(callback) {
         promises = [],
         allPins = new Promise(function(success, err) {
             setTimeout(function() {
-                console.log('Calling Success');
                 success();
             }, 400);
         });
@@ -130,10 +129,7 @@ function isOpenValves(callback) {
     zones.forEach(zone => {
         var p = gpioPromise.read(zone.pin);
         p.then(v => {
-            console.log('Zone ' + zone.name + ' Status:');
-            console.log(!v);
             if (!v) {
-                console.log('Incrementing open valves');
                 openValves++;
             }
         }, e => {
@@ -143,14 +139,12 @@ function isOpenValves(callback) {
     });
 
     allPins.then(function() {
-        console.log('Donald ' + openValves);
         if (openValves > 0) {
             callback();
         }
     });
 
     Promise.all(promises).then(function() {
-        console.log('Status of all zones read');
         allPins.resolve(openValves);
     }, function() {
         console.log('No Open Vales');
