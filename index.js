@@ -90,6 +90,7 @@ function zoneRunner(zoneNumber) {
           stopPump();
           setTimeout(function() {
             disableZone(zone);
+            timer.start();
           }, RELAY_SPACER);
         }
     });

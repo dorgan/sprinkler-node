@@ -1,8 +1,11 @@
 {
-    "Sunday": {
+    "Monday": {
         "times": [
             {
-                "start": "23:15"
+                "start": "07:50"
+            },
+            {
+                "start": "07:51"
             }
         ]
     },
