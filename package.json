@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "node-timers": "0.0.2",
+    "promise": "^8.0.1",
     "rpi-gpio": "^0.9.1"
   }
 }

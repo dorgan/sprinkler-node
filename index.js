@@ -2,7 +2,8 @@ var fs = require('fs'),
     path = require('path'),
     gpio = require('rpi-gpio'),
     simpleTimer = require('node-timers/simple'),
-    countdown = require('node-timers/countdown');
+    countdown = require('node-timers/countdown'),
+    Promise = require('promise');
 
 const LOW = gpio.DIR_HIGH;
 const OFF = 1;
@@ -14,12 +15,6 @@ var pump = false,
     sysConfig = require(path.resolve(__dirname, 'config/config.json')),
     zones = require(path.resolve(__dirname, 'config/zones.json'));
     schedules = require(path.resolve(__dirname, 'config/schedule.json'));
-
-process.env.TZ = sysConfig.timeZone
-
-if (fs.existsSync(path.resolve(__dirname, 'config/pump.json'))) {
-    pump = require(path.resolve(__dirname, 'config/pump.json'));
-}
 
 setup();
 
@@ -103,7 +98,7 @@ function zoneRunner(zoneNumber) {
     });
     enableZone(zone);
     if (pump) {
-        startPump();
+        isOpenValves(startPump);
     };
     console.log('Running Zone ' + zoneNumber + ' (' + zone.name + ') for ' + duration + ' milliseconds');
     runTimer.start();
@@ -113,24 +108,53 @@ function zoneRunner(zoneNumber) {
 function startPump() {
     if (pump) {
         var pin = pump.pin;
-        //if (isOpenValves()) {
-        gpio.write(pin, ON);
-        //}
+        isOpenValves(function() {
+            gpio.write(pin, ON);
+        });
     } else {
         console.log('No Pump Defined');
     }
 }
 
-function isOpenValves() {
-    var isOpen = false;
+function isOpenValves(callback) {
+    var openValves = 0;
+        promises = [],
+        allPins = new Promise(function(success, err) {
+            setTimeout(function() {
+                console.log('Calling Success');
+                success();
+            }, 400);
+        });
+        gpioPromise = gpio.promise;
+
     zones.forEach(zone => {
-        if (isOpen === false) {
-            gpio.read(zone.pin, function(err, val) {
-                isOpen = val === ON;
-            });
+        var p = gpioPromise.read(zone.pin);
+        p.then(v => {
+            console.log('Zone ' + zone.name + ' Status:');
+            console.log(!v);
+            if (!v) {
+                console.log('Incrementing open valves');
+                openValves++;
+            }
+        }, e => {
+            console.log(e);
+        });
+        promises.push(p);
+    });
+
+    allPins.then(function() {
+        console.log('Donald ' + openValves);
+        if (openValves > 0) {
+            callback();
         }
     });
-    return isOpen;
+
+    Promise.all(promises).then(function() {
+        console.log('Status of all zones read');
+        allPins.resolve(openValves);
+    }, function() {
+        console.log('No Open Vales');
+    });
 }
 
 function stopPump() {
@@ -151,6 +175,12 @@ function stopPump() {
 }
 
 function setup() {
+    process.env.TZ = sysConfig.timeZone
+
+    if (fs.existsSync(path.resolve(__dirname, 'config/pump.json'))) {
+        pump = require(path.resolve(__dirname, 'config/pump.json'));
+    }
+
     zones.forEach(zone => {
         gpio.setup(zone.pin, LOW);
     });
