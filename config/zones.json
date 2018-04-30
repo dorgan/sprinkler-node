@@ -1,0 +1,17 @@
+[
+    {
+        "name": "Front Yard",
+        "pin": 3,
+        "duration": 0.07
+    },
+    {
+        "name": "Side",
+        "pin": 5,
+        "duration": 0.07
+    },
+    {
+        "name": "Back Yard",
+        "pin": 7,
+        "duration": 0.07
+    }
+]

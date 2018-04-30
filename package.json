@@ -9,6 +9,7 @@
   "author": "Donald Organ <dorgan@donaldorgan.com>",
   "license": "MIT",
   "dependencies": {
+    "node-timers": "0.0.2",
     "rpi-gpio": "^0.9.1"
   }
 }

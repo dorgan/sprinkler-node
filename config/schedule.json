@@ -1,0 +1,23 @@
+{
+    "Sunday": {
+        "times": [
+            {
+                "start": "23:15"
+            }
+        ]
+    },
+    "Wednesday": {
+        "times" :[
+            {
+                "start": "03:00"
+            }
+        ]
+    },
+    "Friday": {
+        "times": [
+            {
+                "start": "03:00"
+            }
+        ]
+    }
+}
